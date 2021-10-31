@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class bombero extends Model
+class tiposUnidades extends Model
 {
 
     public $timestamps = false;
+    protected $table = 'tiposUnidades';
  
     /**
      * The attributes that are mass assignable.
@@ -19,7 +20,7 @@ class bombero extends Model
 
      
     protected $fillable = [
-        'nombres', 'apellidos', 'fechaNacimiento', 'direccion', 'telefonoResidencial', 'telefonoMovil','email','fechaAlta','fechaBaja','categoria','turno','fotografia','fechaCreacion'
+        'nombre'
     ];
 
     
