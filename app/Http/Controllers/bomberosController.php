@@ -14,10 +14,10 @@ class bomberosController extends Controller
     public function showAllBomberos()
     {
 
-        if(DB::connection()->getDatabaseName())
-            {
-                echo "conncted sucessfully to database EXITO!!!!".DB::connection()->getDatabaseName();
-            }
+        // if(DB::connection()->getDatabaseName())
+        //     {
+        //         echo "conncted sucessfully to database EXITO!!!!".DB::connection()->getDatabaseName();
+        //     }
 
 
 
