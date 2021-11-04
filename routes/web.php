@@ -246,7 +246,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('unidadesEmergencias/{id}', ['uses' => 'unidadesEmergenciasController@update']);
 
  
+    /**Usuarios */
 
+    $router->post('usuarios', ['uses' => 'usuariosController@login']);
 
 
 
