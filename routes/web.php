@@ -17,7 +17,29 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+//RUTAS NO PROTEGIDAS POR AUTENTICACION
 $router->group(['prefix' => 'api'], function () use ($router) {
+
+    /**USUARIOS LOGIN*/    
+    $router->post('login', ['uses' => 'usuariosController@login']);
+
+});
+
+//RUTAS PROTEGIDAS POR AUTENTICACION
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
+
+    /***USUARIO ACTUAL AUTENTICADO */
+
+    $router->get('user',function () use ($router){ 
+        return auth()->user();
+    } ); 
+
+    /**LOOGOUT USUARIO AUTENTICADO */
+    $router->post('logout', ['uses' => 'usuariosController@logout']);
+
+    /**CREAR USUARIO NUEVO */
+    $router->post('usuarios', ['uses' => 'usuariosController@create']);
+
 
     /**BOMBERO */
     $router->get('bomberos',  ['uses' => 'bomberosController@showAllBomberos']);
@@ -246,9 +268,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('unidadesEmergencias/{id}', ['uses' => 'unidadesEmergenciasController@update']);
 
  
-    /**Usuarios */
-
-    $router->post('usuarios', ['uses' => 'usuariosController@login']);
+    
 
 
 

@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\usuarios;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use SebastianBergmann\Environment\Console;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,7 +34,33 @@ class AuthServiceProvider extends ServiceProvider
 
         $this->app['auth']->viaRequest('api', function ($request) {
             if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
+                //return User::where('api_token', $request->input('api_token'))->first();
+
+                $usuario = usuarios::where('api_token', $request->input('api_token'))->first();
+
+                if(!is_null($usuario)){
+
+                    $token_date =date_create( $usuario->fechaToken);
+                $actual_date =date_create( Date("Y-m-d H:i:s"));
+                $fecha_restante = date_diff($token_date,$actual_date);
+
+                $minutos = ($fecha_restante->days * 24 * 60) + ($fecha_restante->h*60)+ ($fecha_restante->i);
+
+                if($minutos<5){
+                    return $usuario;
+                }
+
+                }
+                
+
+
+                // echo "Minutos que han pasado= ".$minutos;
+                // echo " , fecha token= ".$usuario->fechaToken;
+                
+                
+
+
+                //return usuarios::where('api_token', $request->input('api_token'))->first();
             }
         });
     }
