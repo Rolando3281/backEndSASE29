@@ -23,6 +23,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     /**USUARIOS LOGIN*/    
     $router->post('login', ['uses' => 'usuariosController@login']);
 
+    
+
 });
 
 //RUTAS PROTEGIDAS POR AUTENTICACION
@@ -39,6 +41,8 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($ro
 
     /**CREAR USUARIO NUEVO */
     $router->post('usuarios', ['uses' => 'usuariosController@create']);
+
+    $router->get('usuarios',['uses' => 'usuariosController@showAllBomberos']);
 
 
     /**BOMBERO */
