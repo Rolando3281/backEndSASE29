@@ -56,6 +56,7 @@ class usuariosController extends Controller
 
     public function login( Request $request)
     {
+        
 
         $credentials = request(['usuario', 'password']);
 
@@ -63,7 +64,9 @@ class usuariosController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        $user = usuarios::whereUsuario($request->usuario)->first();
+
+        return $this->respondWithToken($token,$user);
 
         /*    
         $user = usuarios::whereUsuario($request->usuario)->first();
@@ -142,12 +145,14 @@ class usuariosController extends Controller
         return response('Deleted Successfully', 200);
     }
 
-    protected function respondWithToken($token)
+    protected function respondWithToken($token, $user)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL()
+            'expires_in' => auth()->factory()->getTTL(),
+            'role' => $user->rol,
+            'nombre'=> $user->nombre . ' ' . $user->apellido
         ]);
     }
 }
